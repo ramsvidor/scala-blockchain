@@ -3,6 +3,13 @@
 
 This project implements a basic blockchain in Scala using Cats Effect, Http4s, and Ember. The blockchain includes functionality for creating wallets, transferring coins, mining blocks, and retrieving transaction and block data via a REST API.
 
+## TODOs and further improvements
+- Compact wallet public key with SHA-256 and RIPEMD-160
+- Implement deterministic wallet address generation from public key derivation
+- Add multiple nodes support
+- Improve error handling
+- Fix REST API issues
+
 ## Features
 
 - **Create a Wallet**: Generate a new wallet with private and public keys.
