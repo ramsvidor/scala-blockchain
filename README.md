@@ -29,6 +29,8 @@ For using this implementation, you can follow the steps below:
 - Mine a block using the `POST /api/mine` endpoint.
 - Check the wallet balance using the `GET /api/wallet/{publicKey}/balance` endpoint (you can use this for both wallets).
 
+There's also a Postman collection for convenience.
+
 ## Requirements
 
 - JVM 18+
