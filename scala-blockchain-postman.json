@@ -1,0 +1,221 @@
+{
+	"info": {
+		"_postman_id": "7d447952-ef91-434e-8a60-a0e1450786a9",
+		"name": "Scala Blockchain",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "5416277"
+	},
+	"item": [
+		{
+			"name": "Create Wallet",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/wallet",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"wallet"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Faucet",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"publicKey\": \"MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAERTk5/o9RWfB4mxYhyYpJ04D64eNNBAWpAvhBgWp5JO9j5mWYXVUWo4peDmk1VBl0t4GWI4737/itntusuw9+5w==\", \"amount\": 1000}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/faucet",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"faucet"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Transfer",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"payerPrivateKey\": \"MIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHkwdwIBAQQgtjpmdQ4YxNDkx5KvqaPxCxgsIyleLlAV2H929nh8lnugCgYIKoZIzj0DAQehRANCAARFOTn+j1FZ8HibFiHJiknTgPrh400EBakC+EGBankk72PmZZhdVRajil4OaTVUGXS3gZYjjvfv+K2e26y7D37n\", \"payerPublicKey\": \"MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAERTk5/o9RWfB4mxYhyYpJ04D64eNNBAWpAvhBgWp5JO9j5mWYXVUWo4peDmk1VBl0t4GWI4737/itntusuw9+5w==\", \"payeePublicKey\": \"MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEzPpO8fENAL05kzYJK+3+VxBEJA+9IJYma8adZX8GR0pTojt6i2GFZ1bsGAzoev3B9khYuIm4dcc+bYMr6MZZgw==\", \"amount\": 100}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/transfer",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"transfer"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Mine Block",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/mine",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"mine"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Wallet Balance",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/wallet/MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAERTk5%2Fo9RWfB4mxYhyYpJ04D64eNNBAWpAvhBgWp5JO9j5mWYXVUWo4peDmk1VBl0t4GWI4737%2Fitntusuw9%2B5w%3D%3D/balance",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"wallet",
+						"MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAERTk5%2Fo9RWfB4mxYhyYpJ04D64eNNBAWpAvhBgWp5JO9j5mWYXVUWo4peDmk1VBl0t4GWI4737%2Fitntusuw9%2B5w%3D%3D",
+						"balance"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Transaction Status",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/transaction/4d2b07bdc8d71186e56db6e66d5d2ed53d4edc38fb5bb1437369295858e6cd90",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"transaction",
+						"4d2b07bdc8d71186e56db6e66d5d2ed53d4edc38fb5bb1437369295858e6cd90"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Blocks",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/block",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"block"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Block by Hash",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/block/yourBlockHash",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"block",
+						"yourBlockHash"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Mempool Transactions",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/mempool",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"mempool"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
