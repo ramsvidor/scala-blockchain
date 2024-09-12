@@ -41,11 +41,11 @@ object Validation {
     def hash: String
   }
 
-  case class Leaf(override val hash: String) extends MerkleTree
+  private case class Leaf(override val hash: String) extends MerkleTree
 
-  case class Branch(override val hash: String,
-                    left: MerkleTree,
-                    right: MerkleTree) extends MerkleTree
+  private case class Branch(override val hash: String,
+                            left: MerkleTree,
+                            right: MerkleTree) extends MerkleTree
 
   object MerkleTree {
     def apply(transactions: Vector[Transaction[_]]): MerkleTree = {

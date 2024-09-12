@@ -17,13 +17,11 @@ import scala.collection.immutable.Queue
 
 object Main extends IOApp.Simple {
 
-  override def run: IO[Unit] = {
-    for {
-      ref <- Ref.of[IO, Ledger[IO]](Ledger(Vector.empty, Queue.empty))
-      blockchain = Blockchain[IO](ref)
-      _ <- server(blockchain).useForever
-    } yield ()
-  }
+  override def run: IO[Unit] = for {
+    ref <- Ref.of[IO, Ledger[IO]](Ledger(Vector.empty, Queue.empty))
+    blockchain = Blockchain[IO](ref)
+    _ <- server(blockchain).useForever
+  } yield ()
 
   def server(blockchain: Blockchain[IO]): Resource[IO, Unit] = {
     EmberServerBuilder.default[IO]

@@ -46,7 +46,7 @@ object APISpec {
       ("hash", Json.fromString(block.hash)),
       ("merkleRoot", Json.fromString(block.merkleRoot)),
       ("previousHash", Json.fromString(block.previousHash)),
-      ("transactions", block.transactions.asJson) // Leverage the existing transaction encoder
+      ("transactions", block.transactions.asJson)
     )
   }
 }
