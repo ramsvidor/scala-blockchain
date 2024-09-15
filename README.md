@@ -4,7 +4,6 @@
 This project implements a basic blockchain in Scala using Cats Effect, Http4s, and Ember. The blockchain includes functionality for creating wallets, transferring coins, mining blocks, and retrieving transaction and block data via a REST API.
 
 ## TODOs and further improvements
-- Compact wallet public key with SHA-256 and RIPEMD-160
 - Implement deterministic wallet address generation from public key derivation
 - Add multiple nodes support
 - Improve error handling
@@ -30,6 +29,16 @@ For using this implementation, you can follow the steps below:
 - Check the wallet balance using the `GET /api/wallet/{publicKey}/balance` endpoint (you can use this for both wallets).
 
 There's also a Postman collection for convenience.
+
+## Testing Wallets
+- Payer Wallet:
+    - Private Key: `MIGNAgEAMBAGByqGSM49AgEGBSuBBAAKBHYwdAIBAQQgwN6BfFPwF41FNIJIR5OKJSNM1N7Cp+15KylNl+hp2sygBwYFK4EEAAqhRANCAARIgNygVPdBznn+MEcb/vryalAraX1EEFBv1/lPDgER/qd6oW8YEOSycCwMqxobZA6XxKyTkc2LP8cwRHZQZwOs`
+    - Public Key: `024880dca054f741ce79fe30471bfefaf26a502b697d4410506fd7f94f0e0111fe`
+
+- Payee Wallet:
+  - Private Key: `MIGNAgEAMBAGByqGSM49AgEGBSuBBAAKBHYwdAIBAQQgOgFMQwD0aOB9U4aML+SxJs/4zPxs4/5Rh62iVJs1O5GgBwYFK4EEAAqhRANCAATZrXt5rGLeQiALfiODMtPJQ6GuweOv5ZVKJ3dxcemcQwf1ToIYA7a3AHeLn8j9BcxkV3pVl+18wevxXrUe7H1P`
+  - Public Key: `03d9ad7b79ac62de42200b7e238332d3c943a1aec1e3afe5954a27777171e99c43`
+
 
 ## Requirements
 

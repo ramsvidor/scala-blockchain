@@ -18,12 +18,10 @@ class BlockchainAPISpec extends AsyncFunSuite with AsyncIOSpec {
 
   private def blockchain = Blockchain[IO](Ref.unsafe(Ledger[IO](Vector.empty, Queue.empty)))
 
-  private val privateKey = "MIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHkwdwIBAQQgtjpmdQ4YxNDkx5KvqaPxCxgsIyleLlAV2H929nh" +
-    "8lnugCgYIKoZIzj0DAQehRANCAARFOTn+j1FZ8HibFiHJiknTgPrh400EBakC+EGBankk72PmZZhdVRajil4OaTVUGXS3gZYjjvfv+K2e26y7D37n"
-  private val publicKey1 = "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAERTk5/o9RWfB4mxYhyYpJ04D64eNNBAWpAvhBgWp5JO9j5mWYXVU" +
-    "Wo4peDmk1VBl0t4GWI4737/itntusuw9+5w=="
-  private val publicKey2 = "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEzPpO8fENAL05kzYJK+3+VxBEJA+9IJYma8adZX8GR0pTojt6i2G" +
-    "FZ1bsGAzoev3B9khYuIm4dcc+bYMr6MZZgw=="
+  private val privateKey = "MIGNAgEAMBAGByqGSM49AgEGBSuBBAAKBHYwdAIBAQQgwN6BfFPwF41FNIJIR5OKJSNM1N7Cp+15KylNl+hp2sy" +
+    "gBwYFK4EEAAqhRANCAARIgNygVPdBznn+MEcb/vryalAraX1EEFBv1/lPDgER/qd6oW8YEOSycCwMqxobZA6XxKyTkc2LP8cwRHZQZwOs"
+  private val publicKey1 = "024880dca054f741ce79fe30471bfefaf26a502b697d4410506fd7f94f0e0111fe"
+  private val publicKey2 = "03d9ad7b79ac62de42200b7e238332d3c943a1aec1e3afe5954a27777171e99c43"
   private val faucetRequest = FaucetRequest(publicKey1, 10).asJson
 
   def postRequest(uri: Uri, json: io.circe.Json): Request[IO] =

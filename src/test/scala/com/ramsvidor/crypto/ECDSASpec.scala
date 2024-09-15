@@ -55,15 +55,17 @@ class ECDSASpec extends AsyncWordSpec with AsyncIOSpec with Matchers {
     }
 
     "fail to deserialize an invalid public key" in {
+      val validPrivateKey = "MIGNAgEAMBAGByqGSM49AgEGBSuBBAAKBHYwdAIBAQQgwN6BfFPwF41FNIJIR5OKJSNM1N7Cp+15KylNl+hp2" +
+        "sygBwYFK4EEAAqhRANCAARIgNygVPdBznn+MEcb/vryalAraX1EEFBv1/lPDgER/qd6oW8YEOSycCwMqxobZA6XxKyTkc2LP8cwRHZQZwOs"
       recoverToSucceededIf[RuntimeException] {
-        KeyPair.deserialize[IO]("invalidPrivateKey", "invalidPublicKey").unsafeToFuture()
+        KeyPair.deserialize[IO](validPrivateKey, "invalidKey").unsafeToFuture()
       }
     }
 
     "fail to sign with invalid private key" in {
-      val invalidPrivateKey = "invalidPrivateKey"
+      val validPublicKey = "024880dca054f741ce79fe30471bfefaf26a502b697d4410506fd7f94f0e0111fe"
       for {
-        maybeKeyPair <- KeyPair.deserialize[IO](invalidPrivateKey, "validPublicKey").attempt
+        maybeKeyPair <- KeyPair.deserialize[IO]("invalidPrivateKey", validPublicKey).attempt
       } yield {
         maybeKeyPair.isLeft shouldBe true
       }

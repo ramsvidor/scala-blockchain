@@ -39,7 +39,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"publicKey\": \"MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAERTk5/o9RWfB4mxYhyYpJ04D64eNNBAWpAvhBgWp5JO9j5mWYXVUWo4peDmk1VBl0t4GWI4737/itntusuw9+5w==\", \"amount\": 1000}"
+					"raw": "{\"publicKey\": \"024880dca054f741ce79fe30471bfefaf26a502b697d4410506fd7f94f0e0111fe\", \"amount\": 1000}"
 				},
 				"url": {
 					"raw": "http://localhost:8080/api/faucet",
@@ -76,7 +76,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"payerPrivateKey\": \"MIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHkwdwIBAQQgtjpmdQ4YxNDkx5KvqaPxCxgsIyleLlAV2H929nh8lnugCgYIKoZIzj0DAQehRANCAARFOTn+j1FZ8HibFiHJiknTgPrh400EBakC+EGBankk72PmZZhdVRajil4OaTVUGXS3gZYjjvfv+K2e26y7D37n\", \"payerPublicKey\": \"MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAERTk5/o9RWfB4mxYhyYpJ04D64eNNBAWpAvhBgWp5JO9j5mWYXVUWo4peDmk1VBl0t4GWI4737/itntusuw9+5w==\", \"payeePublicKey\": \"MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEzPpO8fENAL05kzYJK+3+VxBEJA+9IJYma8adZX8GR0pTojt6i2GFZ1bsGAzoev3B9khYuIm4dcc+bYMr6MZZgw==\", \"amount\": 100}"
+					"raw": "{\n    \"payerPrivateKey\": \"MIGNAgEAMBAGByqGSM49AgEGBSuBBAAKBHYwdAIBAQQgwN6BfFPwF41FNIJIR5OKJSNM1N7Cp+15KylNl+hp2sygBwYFK4EEAAqhRANCAARIgNygVPdBznn+MEcb/vryalAraX1EEFBv1/lPDgER/qd6oW8YEOSycCwMqxobZA6XxKyTkc2LP8cwRHZQZwOs\",\n    \"payerPublicKey\": \"024880dca054f741ce79fe30471bfefaf26a502b697d4410506fd7f94f0e0111fe\",\n    \"payeePublicKey\": \"03d9ad7b79ac62de42200b7e238332d3c943a1aec1e3afe5954a27777171e99c43\",\n    \"amount\": 100\n}"
 				},
 				"url": {
 					"raw": "http://localhost:8080/api/transfer",
@@ -119,7 +119,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/wallet/MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAERTk5%2Fo9RWfB4mxYhyYpJ04D64eNNBAWpAvhBgWp5JO9j5mWYXVUWo4peDmk1VBl0t4GWI4737%2Fitntusuw9%2B5w%3D%3D/balance",
+					"raw": "http://localhost:8080/api/wallet/024880dca054f741ce79fe30471bfefaf26a502b697d4410506fd7f94f0e0111fe/balance",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -128,7 +128,7 @@
 					"path": [
 						"api",
 						"wallet",
-						"MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAERTk5%2Fo9RWfB4mxYhyYpJ04D64eNNBAWpAvhBgWp5JO9j5mWYXVUWo4peDmk1VBl0t4GWI4737%2Fitntusuw9%2B5w%3D%3D",
+						"024880dca054f741ce79fe30471bfefaf26a502b697d4410506fd7f94f0e0111fe",
 						"balance"
 					]
 				}

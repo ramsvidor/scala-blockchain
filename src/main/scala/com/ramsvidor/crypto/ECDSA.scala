@@ -3,10 +3,13 @@ package com.ramsvidor.crypto
 import cats.effect.Async
 import cats.effect.implicits.*
 import cats.syntax.all.*
+import org.bouncycastle.jcajce.provider.asymmetric.ec.BCECPublicKey
+import org.bouncycastle.jce.ECNamedCurveTable
 import org.bouncycastle.jce.provider.BouncyCastleProvider
+import org.bouncycastle.jce.spec.ECPublicKeySpec
 
 import java.nio.charset.StandardCharsets
-import java.security.spec.{PKCS8EncodedKeySpec, X509EncodedKeySpec}
+import java.security.spec.{ECGenParameterSpec, PKCS8EncodedKeySpec}
 import java.security.{KeyFactory, KeyPairGenerator, Security}
 import java.util.Base64
 
@@ -22,7 +25,7 @@ object ECDSA {
 
   private def keyPairGenerator[F[_]](using F: Async[F]): F[KeyPairGenerator] = Async[F].delay {
     val generator = KeyPairGenerator.getInstance("ECDSA", "BC")
-    generator.initialize(256)
+    generator.initialize(new ECGenParameterSpec("secp256k1"))
     generator
   }.handleErrorWith(raiseError[F, KeyPairGenerator](_, "Failed to get key generator"))
 
@@ -46,7 +49,7 @@ object ECDSA {
 
   object KeyPair {
     def generate[F[_]](using F: Async[F]): F[KeyPair[F]] = generateKeyPair.flatMap { keyPair =>
-      (PrivateKey(keyPair.getPrivate), PublicKey(keyPair.getPublic)).mapN(KeyPair(_, _))
+      (PrivateKey(keyPair.getPrivate), PublicKey(keyPair.getPublic.asInstanceOf[BCECPublicKey])).mapN(KeyPair(_, _))
     }
 
     def deserialize[F[_]](serializedPrivateKey: String, serializedPublicKey: String)
@@ -71,17 +74,13 @@ object ECDSA {
     def deserialize: F[K]
   }
 
-  final case class PublicKey[F[_] : Async](override val value: String) extends Key[F, java.security.PublicKey] {
-    override def deserialize: F[java.security.PublicKey] = deserializePublicKey(value)
+  final case class PublicKey[F[_] : Async](override val value: String) extends Key[F, BCECPublicKey] {
+    override def deserialize: F[BCECPublicKey] = deserializePublicKey(value)
   }
 
   object PublicKey {
-    def apply[F[_]](key: java.security.PublicKey)(using F: Async[F]): F[PublicKey[F]] =
-      Async[F].delay(PublicKey(base64Encoder.encodeToString(key.getEncoded)))
-
-    def apply[F[_]](key: java.security.PublicKey, testKey: Boolean)(using F: Async[F]): PublicKey[F] =
-      require(testKey, "Public key should be used for testing only") // scalastyle:ignore
-      PublicKey(base64Encoder.encodeToString(key.getEncoded))
+    def apply[F[_]](key: BCECPublicKey)(using F: Async[F]): F[PublicKey[F]] =
+      Async[F].delay(PublicKey(key.getQ.getEncoded(true).map("%02x".format(_)).mkString))
   }
 
   final case class PrivateKey[F[_] : Async] private(override val value: String)
@@ -108,9 +107,12 @@ object ECDSA {
     keyFactory.map(_.generatePrivate(new PKCS8EncodedKeySpec(decodeBase64Key(key), "ECDSA")))
       .handleErrorWith(raiseError[F, java.security.PrivateKey](_, s"Failed to deserialize private key ${key.take(12)}"))
 
-  private def deserializePublicKey[F[_]](key: String)(using F: Async[F]): F[java.security.PublicKey] =
-    keyFactory.map(_.generatePublic(new X509EncodedKeySpec(decodeBase64Key(key), "ECDSA")))
-      .handleErrorWith(raiseError[F, java.security.PublicKey](_, s"Failed to deserialize public key ${key.take(12)}"))
+  private def deserializePublicKey[F[_]](key: String)(using F: Async[F]): F[BCECPublicKey] =
+    keyFactory.map { keyFactory =>
+      val ecSpec = ECNamedCurveTable.getParameterSpec("secp256k1")
+      val decompressedKey = ecSpec.getCurve.decodePoint(key.sliding(2, 2).toArray.map(Integer.parseInt(_, 16).toByte))
+      keyFactory.generatePublic(ECPublicKeySpec(decompressedKey, ecSpec)).asInstanceOf[BCECPublicKey]
+    }.handleErrorWith(raiseError[F, BCECPublicKey](_, s"Failed to deserialize public key ${key.take(12)}"))
 
   private def getSigningInstance[F[_]](using F: Async[F]): F[java.security.Signature] =
     Async[F].delay(java.security.Signature.getInstance("SHA256withECDSA", "BC"))
