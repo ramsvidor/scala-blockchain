@@ -49,7 +49,8 @@ object ECDSA {
       (PrivateKey(keyPair.getPrivate), PublicKey(keyPair.getPublic)).mapN(KeyPair(_, _))
     }
 
-    def deserialize[F[_]](serializedPrivateKey: String, serializedPublicKey: String)(using F: Async[F]): F[KeyPair[F]] = (
+    def deserialize[F[_]](serializedPrivateKey: String, serializedPublicKey: String)
+                         (using F: Async[F]): F[KeyPair[F]] = (
       deserializePrivateKey(serializedPrivateKey),
       deserializePublicKey(serializedPublicKey)
     ).parFlatMapN { (javaSecurityPrivateKey, javaSecurityPublicKey) =>
@@ -83,11 +84,12 @@ object ECDSA {
       PublicKey(base64Encoder.encodeToString(key.getEncoded))
   }
 
-  final case class PrivateKey[F[_] : Async] private(override val value: String) extends Key[F, java.security.PrivateKey] {
+  final case class PrivateKey[F[_] : Async] private(override val value: String)
+    extends Key[F, java.security.PrivateKey] {
     override def deserialize: F[java.security.PrivateKey] = deserializePrivateKey(value)
   }
 
-  object PrivateKey {
+  private object PrivateKey {
     def apply[F[_]](key: java.security.PrivateKey)(using F: Async[F]): F[PrivateKey[F]] =
       Async[F].delay(PrivateKey(base64Encoder.encodeToString(key.getEncoded)))
 
@@ -96,7 +98,7 @@ object ECDSA {
       PrivateKey(base64Encoder.encodeToString(key.getEncoded))
   }
 
-  protected def raiseError[F[_], A](e: Throwable, message: String = "ECDSA Error")(using F: Async[F]): F[A] =
+  private def raiseError[F[_], A](e: Throwable, message: String = "ECDSA Error")(using F: Async[F]): F[A] =
     Async[F].raiseError(new RuntimeException(s"$message: ${e.getMessage}", e))
 
   private def decodeBase64Key(key: String): Array[Byte] =
