@@ -39,7 +39,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"publicKey\": \"024880dca054f741ce79fe30471bfefaf26a502b697d4410506fd7f94f0e0111fe\", \"amount\": 1000}"
+					"raw": "{\n    \"publicKey\": \"024880dca054f741ce79fe30471bfefaf26a502b697d4410506fd7f94f0e0111fe\",\n    \"amount\": 1000\n}"
 				},
 				"url": {
 					"raw": "http://localhost:8080/api/faucet",
