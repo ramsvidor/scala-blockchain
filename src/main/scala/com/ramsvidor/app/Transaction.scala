@@ -10,7 +10,6 @@ final case class Transaction[F[_] : Async](hash: String,
                                            amount: BigDecimal,
                                            signature: Option[Signature] = None,
                                            blockHash: Option[String] = None) {
-
   def isSigned: Boolean = signature.isDefined && signature.get.data.nonEmpty
 
   def isConfirmed: Boolean = blockHash.isDefined && blockHash.get.nonEmpty

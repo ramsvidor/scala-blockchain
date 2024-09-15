@@ -12,7 +12,6 @@ import org.http4s.circe.*
 import org.http4s.dsl.io.*
 
 object BlockchainAPI {
-
   def routes(blockchain: Blockchain[IO]): HttpRoutes[IO] = HttpRoutes.of[IO] {
     case POST -> Root / "wallet" => for {
       keyPair <- KeyPair.generate[IO]

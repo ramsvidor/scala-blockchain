@@ -16,20 +16,17 @@ import org.http4s.server.middleware.Logger
 import scala.collection.immutable.Queue
 
 object Main extends IOApp.Simple {
-
   override def run: IO[Unit] = for {
     ref <- Ref.of[IO, Ledger[IO]](Ledger(Vector.empty, Queue.empty))
     blockchain = Blockchain[IO](ref)
     _ <- server(blockchain).useForever
   } yield ()
 
-  def server(blockchain: Blockchain[IO]): Resource[IO, Unit] = {
+  private def server(blockchain: Blockchain[IO]): Resource[IO, Unit] =
     EmberServerBuilder.default[IO]
       .withHost(ipv4"0.0.0.0")
       .withPort(port"8080")
       .withHttpApp(Logger.httpApp(true, true)(Router("/api" -> BlockchainAPI.routes(blockchain)).orNotFound))
       .build
       .void
-  }
-
 }

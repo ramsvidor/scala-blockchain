@@ -11,7 +11,6 @@ import org.http4s.*
 import org.http4s.circe.*
 
 object APISpec {
-
   case class FaucetRequest(publicKey: String, amount: BigDecimal)
 
   case class TransferRequest(payerPrivateKey: String, payerPublicKey: String, payeePublicKey: String, amount: BigDecimal)

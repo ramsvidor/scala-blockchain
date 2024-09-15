@@ -6,7 +6,6 @@ import com.ramsvidor.crypto.Hasher.sha256Hash
 import scala.annotation.tailrec
 
 object Validation {
-
   type ValidationResult[A] = ValidatedNel[ValidationError, A]
 
   sealed trait ValidationError {
@@ -69,5 +68,4 @@ object Validation {
         buildTree(branches.toVector)
     }
   }
-
 }

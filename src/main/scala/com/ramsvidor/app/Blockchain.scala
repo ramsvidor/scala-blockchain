@@ -12,7 +12,6 @@ import com.ramsvidor.crypto.Hasher.sha256Hash
 import scala.collection.immutable.Queue
 
 final case class Blockchain[F[_] : Async](ref: Ref[F, Ledger[F]]) {
-
   private val faucetWallet = Wallet[F]()
 
   def currentState: F[Ledger[F]] = ref.get
@@ -69,11 +68,9 @@ final case class Blockchain[F[_] : Async](ref: Ref[F, Ledger[F]]) {
   private def verifyTransaction(transaction: Transaction[F]): F[Boolean] =
     if transaction.isSigned then KeyPair.verify(transaction.hash, transaction.payer, transaction.signature.get)
     else false.pure[F]
-
 }
 
 object Blockchain {
-
   final case class Ledger[F[_] : Async](blocks: Vector[Block[F]],
                                         mempool: Queue[Transaction[F]]) {
 

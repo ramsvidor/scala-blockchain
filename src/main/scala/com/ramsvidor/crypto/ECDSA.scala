@@ -3,6 +3,7 @@ package com.ramsvidor.crypto
 import cats.effect.Async
 import cats.effect.implicits.*
 import cats.syntax.all.*
+import com.ramsvidor.crypto.Hasher.{HexString, given}
 import org.bouncycastle.jcajce.provider.asymmetric.ec.BCECPublicKey
 import org.bouncycastle.jce.ECNamedCurveTable
 import org.bouncycastle.jce.provider.BouncyCastleProvider
@@ -80,7 +81,7 @@ object ECDSA {
 
   object PublicKey {
     def apply[F[_]](key: BCECPublicKey)(using F: Async[F]): F[PublicKey[F]] =
-      Async[F].delay(PublicKey(key.getQ.getEncoded(true).map("%02x".format(_)).mkString))
+      Async[F].delay(PublicKey(key.getQ.getEncoded(true)))
   }
 
   final case class PrivateKey[F[_] : Async] private(override val value: String)
@@ -107,10 +108,10 @@ object ECDSA {
     keyFactory.map(_.generatePrivate(new PKCS8EncodedKeySpec(decodeBase64Key(key), "ECDSA")))
       .handleErrorWith(raiseError[F, java.security.PrivateKey](_, s"Failed to deserialize private key ${key.take(12)}"))
 
-  private def deserializePublicKey[F[_]](key: String)(using F: Async[F]): F[BCECPublicKey] =
+  private def deserializePublicKey[F[_]](key: HexString)(using F: Async[F]): F[BCECPublicKey] =
     keyFactory.map { keyFactory =>
       val ecSpec = ECNamedCurveTable.getParameterSpec("secp256k1")
-      val decompressedKey = ecSpec.getCurve.decodePoint(key.sliding(2, 2).toArray.map(Integer.parseInt(_, 16).toByte))
+      val decompressedKey = ecSpec.getCurve.decodePoint(key)
       keyFactory.generatePublic(ECPublicKeySpec(decompressedKey, ecSpec)).asInstanceOf[BCECPublicKey]
     }.handleErrorWith(raiseError[F, BCECPublicKey](_, s"Failed to deserialize public key ${key.take(12)}"))
 
