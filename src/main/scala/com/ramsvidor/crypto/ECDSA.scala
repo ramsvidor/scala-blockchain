@@ -13,6 +13,7 @@ import java.nio.charset.StandardCharsets
 import java.security.spec.{ECGenParameterSpec, PKCS8EncodedKeySpec}
 import java.security.{KeyFactory, KeyPairGenerator, Security}
 import java.util.Base64
+import scala.language.implicitConversions
 
 object ECDSA {
   Security.addProvider(new BouncyCastleProvider())

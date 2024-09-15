@@ -6,7 +6,6 @@ val circeVersion = "0.14.7"
 lazy val root = (project in file("."))
   .settings(
     name := "scala-blockchain",
-
     libraryDependencies ++= Seq(
       "org.http4s" %% "http4s-dsl" % http4sVersion,
       "org.http4s" %% "http4s-ember-server" % http4sVersion,
@@ -20,3 +19,6 @@ lazy val root = (project in file("."))
       "org.typelevel" %% "cats-effect-testing-scalatest" % "1.5.0" % Test
     )
   )
+
+Global / onChangedBuildSource := ReloadOnSourceChanges
+

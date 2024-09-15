@@ -1,6 +1,7 @@
 package com.ramsvidor.crypto
 
 import java.security.MessageDigest
+import scala.language.implicitConversions
 
 object Hasher {
   type HexString = String
