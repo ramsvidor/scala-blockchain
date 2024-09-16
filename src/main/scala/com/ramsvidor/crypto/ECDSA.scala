@@ -54,8 +54,7 @@ object ECDSA {
       (PrivateKey(keyPair.getPrivate), PublicKey(keyPair.getPublic.asInstanceOf[BCECPublicKey])).mapN(KeyPair(_, _))
     }
 
-    def deserialize[F[_]](serializedPrivateKey: String, serializedPublicKey: String)
-                         (using F: Async[F]): F[KeyPair[F]] = (
+    def deserialize[F[_]](serializedPrivateKey: String, serializedPublicKey: String)(using F: Async[F]): F[KeyPair[F]] = (
       deserializePrivateKey(serializedPrivateKey),
       deserializePublicKey(serializedPublicKey)
     ).parFlatMapN { (javaSecurityPrivateKey, javaSecurityPublicKey) =>

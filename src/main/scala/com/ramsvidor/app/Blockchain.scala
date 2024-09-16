@@ -90,7 +90,6 @@ object Blockchain {
                                        transactions: Vector[Transaction[F]])
 
   object Block {
-
     def apply[F[_]](previousHash: String, transactions: Vector[Transaction[F]])(using F: Async[F]): Block[F] =
       Block(sha256Hash(s"$previousHash:${MerkleTree(transactions).hash}:${transactions.map(_.hash).mkString}"),
         MerkleTree(transactions).hash,

@@ -52,16 +52,13 @@ object BlockchainAPI {
       blockchain.unconfirmedBalance(PublicKey(publicKey)).flatMap(balance => Ok(balance.toString))
 
     case GET -> Root / "transaction" / hash => blockchain.currentState.flatMap { ledger =>
-      val tx = ledger.blocks.flatMap(_.transactions).find(_.hash == hash)
-      tx match {
+      ledger.blocks.flatMap(_.transactions).find(_.hash == hash) match {
         case Some(transaction) => Ok(transaction.asJson)
         case None => NotFound(s"Transaction $hash not found")
       }
     }
 
-    case GET -> Root / "block" => blockchain.currentState.flatMap { ledger =>
-      Ok(ledger.blocks.asJson)
-    }
+    case GET -> Root / "block" => blockchain.currentState.flatMap(ledger => Ok(ledger.blocks.asJson))
 
     case GET -> Root / "block" / hash => blockchain.currentState.flatMap { ledger =>
       ledger.blocks.find(_.hash == hash) match {
@@ -70,8 +67,6 @@ object BlockchainAPI {
       }
     }
 
-    case GET -> Root / "mempool" => blockchain.currentState.flatMap { ledger =>
-      Ok(ledger.mempool.toList.asJson)
-    }
+    case GET -> Root / "mempool" => blockchain.currentState.flatMap(ledger => Ok(ledger.mempool.toList.asJson))
   }
 }
