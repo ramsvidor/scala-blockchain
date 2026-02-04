@@ -1,8 +1,12 @@
 .DS_Store
 .bsp/
 .idea/
+.vscode/
+.bloop/
+.metals/
 target/
 logs/
+*.iml
 **/project/*
 !**/project/build.properties
 !**/project/plugins.sbt

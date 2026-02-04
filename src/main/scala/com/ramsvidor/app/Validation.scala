@@ -47,12 +47,12 @@ object Validation {
                             right: MerkleTree) extends MerkleTree
 
   object MerkleTree {
-    def apply(transactions: Vector[Transaction[_]]): MerkleTree = {
+    def apply(transactions: Vector[Transaction[?]]): MerkleTree = {
       if (transactions.isEmpty) throw new IllegalArgumentException("Cannot build a Merkle tree with no transactions")
       buildTree(transactions.map(transaction => Leaf(transaction.hash)))
     }
 
-    def verify(merkleRoot: String, transactions: Vector[Transaction[_]]): Boolean =
+    def verify(merkleRoot: String, transactions: Vector[Transaction[?]]): Boolean =
       MerkleTree(transactions).hash == merkleRoot
 
     @tailrec
