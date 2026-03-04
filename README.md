@@ -42,10 +42,10 @@ There's also a Postman collection for convenience.
 
 ## Requirements
 
-- JVM 18+
-- Scala 3.3.x
+- JVM 25+
+- Scala 3.8.x
 - sbt 1.10.1 (Scala Build Tool)
-- Cats Effect 3.5.x
+- Cats Effect 3.6.x
 - Http4s 0.23.x
 - Circe for JSON encoding/decoding
 
